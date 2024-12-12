@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS "Fornecedores" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"nome" TEXT NOT NULL,
+	"cnpj" TEXT NOT NULL,
+	PRIMARY KEY("id"),
+	FOREIGN KEY ("id") REFERENCES "Produtos"("id_fornecedor")
+	ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS "Clientes" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"nome" TEXT NOT NULL,
+	PRIMARY KEY("id")
+);
+
+CREATE TABLE IF NOT EXISTS "Produtos" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"nome" TEXT NOT NULL,
+	"id_fornecedor" INTEGER NOT NULL,
+	PRIMARY KEY("id", "id_fornecedor"),
+	FOREIGN KEY ("id") REFERENCES "Vendas"("id_produto")
+	ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS "Vendas" (
+	"id" INTEGER NOT NULL UNIQUE,
+	"id_cliente" INTEGER NOT NULL,
+	"id_produto" INTEGER NOT NULL,
+	PRIMARY KEY("id", "id_cliente"),
+	FOREIGN KEY ("id_cliente") REFERENCES "Clientes"("id")
+	ON UPDATE NO ACTION ON DELETE NO ACTION
+);
